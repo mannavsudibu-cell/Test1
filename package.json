@@ -1,0 +1,26 @@
+{
+  "name": "testserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "App.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node App"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.2.3",
+    "ejs": "^4.0.1",
+    "express": "^5.2.1",
+    "express-fileupload": "^1.5.2",
+    "express-flash": "^0.0.2",
+    "express-session": "^1.19.0",
+    "multer": "^2.0.2",
+    "pg": "^8.18.0",
+    "sequelize": "^6.37.7"
+  }
+}

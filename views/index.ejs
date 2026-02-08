@@ -1,0 +1,100 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="styleUpdate.css">
+</head>
+
+<body>
+    <header class="top-bar">
+        <h1>Edit Profile</h1>
+        <form style="margin: 0;" action="/Logout" method="post">
+            <button class="save-btn" type="submit">Logout</button>
+        </form>
+    </header>
+
+    <form class="profile-form" action="/Update" method="post" enctype="multipart/form-data">
+
+        <div class="photo-section">
+            <img src="/<%=User.ProfilePicture %>" class="profile-photo" alt="Profile photo">
+            <p>Upload image</p>
+            <input type="file" name="Image" accept="Image/*">
+        </div>
+
+        <label>
+            Name
+            <input type="text" name="Username" value="<%=User.Username%>" required>
+        </label>
+
+        <label>
+            Description
+            <input type="text" name="Description" value="<%=User.Description%>">
+        </label>
+
+        <label>
+            Contact instructions
+            <input type="text" name="Contact" value="<%=User.Contact_Instructions%>">
+        </label>
+
+        <label>
+            Class
+            <select name="Class" required>
+                <option value=<%=User.Class%>><%=User.Class%>
+                </option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+        </label>
+
+        <button type="submit" class="change-photo">Save</button>
+    </form>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="/Find" class="nav-item">🔥</a>
+        <a href="/Matches" class="nav-item">⭐</a>
+        <a href="/" class="nav-item active">👤</a>
+    </nav>
+
+
+    <!-- <h1>Edit Profile</h1>
+    <form action="/Update" method="post" enctype="multipart/form-data" class="UpdateProfileOptions">
+        <div class="Changeable">
+            <p2>Name</p2>
+            <input type="text" name="Username" value="<%=User.Username%>" required>
+        </div>
+        <div class="Changeable">
+            <p2>Profile Image</p2>
+            <input type="file" name="Image" accept="Image/*">
+            <div class="UploadedImageContiner">
+                <p3 class="Grow">Uploaded picture will be displayed after saving</p3>
+                <img class="Grow UploadedImage" src="/<%=User.ProfilePicture %>"></img>
+            </div>
+        </div>
+        <div class="Changeable">
+            <p2>Class</p2>
+            <select name="Class" required>
+                <option value=<%=User.Class%>><%=User.Class%>
+                </option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+        </div>
+
+        <button type="submit" name="Register">Save</button>
+    </form>
+    <form action="/Logout" method="post">
+        <button type="submit">Logout</button>
+    </form>
+
+    <div class="Nav_Footer_Container">
+        <div class="ChangeSite">
+            <a href="/Find" class="NavText">Find</a>
+            <a class="NavText">Matches</a>
+            <a href="/" class="NavText">User</a>
+        </div>
+    </div> -->
+</body>

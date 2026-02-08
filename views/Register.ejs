@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=1.0">
+    <title>Login/Register</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body class="UserJoining">
+    <div class="Container">
+        <div class="Form-Box" id="register-form">
+            <form action="/Register" method="post">
+                <h2>Register</h2>
+                <input type="text" name="Username" placeholder="Username" required>
+                <input type="email" name="Email" placeholder="Email" required>
+                <input type="password" name="Password" placeholder="Password" required>
+                <select name="Class" required>
+                    <option value="">--Select Class--</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+                <button type="submit" name="Register">Register</button>
+                <p>Have an account? <a href="/Login">Login</a></p>
+            </form>
+        </div>
+    </div>
+</body>
