@@ -124,6 +124,8 @@ app.post("/Login", async (req, res) => {
             if (await bcrypt.compare(Password, User.Password)) {
                 req.session.User = User;
                 res.redirect("/");
+            } else {
+                res.render("Login.ejs", { Error: "Wrong Email or password" });
             }
         } else {
             res.render("Login.ejs", { Error: "Wrong Email or password" })
