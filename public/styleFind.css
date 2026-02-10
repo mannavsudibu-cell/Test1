@@ -22,6 +22,7 @@ html {
         justify-items: center;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
 }
 
 /* Card shell */
@@ -201,5 +202,26 @@ body {
     height: 100%;
     display: flex;
     justify-content: center;
+}
+
+.user-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+
+    touch-action: pan-y;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.user-card.swipe-left {
+    background: #ffe5e571;
+}
+
+.user-card.swipe-right {
+    background: #e5fff065;
 }
 

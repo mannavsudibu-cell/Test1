@@ -4,7 +4,7 @@ const flash = require('express-flash');
 const session = require('express-session');
 const bcrypt = require("bcrypt");
 const path = require("node:path");
-const { Sequelize, DataTypes, ARRAY } = require("sequelize");
+const { Sequelize, DataTypes, ARRAY, Op } = require("sequelize");
 const bodyParser = require('body-parser');
 const fileUpload = require("express-fileupload");
 const { configDotenv } = require("dotenv");
@@ -102,7 +102,7 @@ app.post("/Register", async (req, res) => {
             res.redirect("/Register");
         } else {
             const HashedPassword = await bcrypt.hash(Password, 10);
-            const NewPost = await post.create({ Username, Password: HashedPassword, Email, Class, Likes: [], Description: "", Contact_Instructions: ""});
+            const NewPost = await post.create({ Username, Password: HashedPassword, Email, Class, Likes: [], Description: "", Contact_Instructions: "" });
             res.redirect("/Login");
         }
     } catch (err) {
@@ -186,10 +186,25 @@ app.get("/get-posts", async (req, res) => {
     }
 })
 
-app.get("/get-Random", async (req, res) => {
+app.post("/get-Random", async (req, res) => {
     try {
+        console.log(await req.body);
+        const Seen = await req.body.Seen;
+        const Likes = await req.session.User.Likes;
+
+        const Combined = Seen 
+
+        console.log(Likes);
         const Random = await post.findOne({
-            order: sequelize.random()
+            order: sequelize.random(),
+            where: {
+                Email: {
+                    [Op.not]: req.session.User.Email,
+                },
+                id: {
+                    [Op.not]: Seen,
+                }
+            }
         });
         res.send(Random)
     } catch (err) {
