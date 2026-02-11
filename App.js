@@ -13,6 +13,8 @@ const { Where } = require("sequelize/lib/utils");
 const { reverse } = require("node:dns");
 require("dotenv").config();
 
+var uuidv4 = require('uuid');
+
 const app = express();
 const Port = process.env.PORT || 3000;
 
@@ -154,19 +156,28 @@ app.post("/Update", async (req, res) => {
 
 
     if (req.files) {
+        const OldFile = __dirname + "/Uploads/" + User.ProfilePicture;
+        if (fs.existsSync(OldFile)) {
+            fs.unlink(OldFile, (err) => {
+                if (err) throw err
+                console.log('File deleted successfully')
+            });
+        }
         const NewFile = await req.files.Image;
-        const UploadPath = __dirname + "/Uploads/" + NewFile.name;
+        const NewName = uuidv4.v4() + path.extname(NewFile.name);
+        console.log(NewName);
+        const UploadPath = __dirname + "/Uploads/" + NewName;
         console.log(await req.files.Image);
 
         console.log(NewFile);
         NewFile.mv(UploadPath, function (Err) {
             if (Err) return res.status(500).send(Err);
 
-            User.ProfilePicture = NewFile.name
+            User.ProfilePicture = NewName
             console.log("File Uploaded");
         })
 
-        User.ProfilePicture = NewFile.name;
+        User.ProfilePicture = NewName;
     }
 
     console.log(User)
