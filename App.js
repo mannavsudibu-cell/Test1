@@ -8,12 +8,10 @@ const { Sequelize, DataTypes, ARRAY, Op } = require("sequelize");
 const bodyParser = require('body-parser');
 const fileUpload = require("express-fileupload");
 const { configDotenv } = require("dotenv");
-const { table } = require("node:console");
-const { Where } = require("sequelize/lib/utils");
-const { reverse } = require("node:dns");
 require("dotenv").config();
 
 var uuidv4 = require('uuid');
+const fs = require("fs");
 
 const app = express();
 const Port = process.env.PORT || 3000;
@@ -183,7 +181,7 @@ app.post("/Update", async (req, res) => {
     console.log(User)
 
     req.session.User = User
-
+    
     await User.save();
     res.redirect("/");
 })

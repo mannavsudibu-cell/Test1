@@ -1,13 +1,15 @@
 var Id = 0;
 const CardContainer = document.getElementById("Holder")
+const loader = document.getElementById("loadingIndicator");
 var CurrentCard = null
 
 const Liked = [];
 const Seen = [];
 
 async function SetNextUser() {
-    if(CurrentCard){
-        CurrentCard.remove(); 
+    if (CurrentCard) {
+        CurrentCard.remove();
+        loader.style.display = "flex";
     }
     console.log("Next")
 
@@ -18,21 +20,22 @@ async function SetNextUser() {
         },
         body: JSON.stringify({ Seen: Seen }),
     })
+    loader.style.display = "none";
     try {
- const Found = await Response.json();
+        const Found = await Response.json();
 
         const card = document.createElement("div");
-        card.className = "profile-card";
+        card.className = "user-card";
 
         id = Found.id
         Seen.push(id);
 
         const ImageSection = document.createElement("div");
-        ImageSection.className = "image-section";
+        ImageSection.className = "image-wrapper";
 
         const NewImage = document.createElement("img");
         NewImage.src = "/" + Found.ProfilePicture;
-        NewImage.alt= "User photo"
+        NewImage.alt = "User photo"
 
         ImageSection.appendChild(NewImage)
 
@@ -49,7 +52,7 @@ async function SetNextUser() {
         InfoSection.appendChild(Klase);
 
         const Description = document.createElement("p");
-        Description.className = "bio";
+        Description.className = "user-bio";
         Description.innerHTML = Found.Description;
         InfoSection.appendChild(Description);
 
@@ -61,7 +64,7 @@ async function SetNextUser() {
         CardContainer.insertBefore(card, CardContainer.firstChild)
         enableSwipe(card);
         CurrentCard = card;
-    } catch(Err){
+    } catch (Err) {
         console.log("Ran out")
     }
 
@@ -132,7 +135,8 @@ function enableSwipe(card) {
                 }
                 if (direction === -1) {
                     SetNextUser();
-                }}, 250);
+                }
+            }, 250);
         } else {
             card.style.transform = "translateX(0)";
             card.classList.remove("swipe-left", "swipe-right");
