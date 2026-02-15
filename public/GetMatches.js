@@ -1,3 +1,7 @@
+const matchesContainer = document.getElementById("matchesContainer");
+const emptyState = document.getElementById("emptyState");
+const loading = document.getElementById("loadingIndicator");
+
 async function SetMatches() {
     const SentData = await fetch("/Matches", {
         method: "POST",
@@ -5,25 +9,28 @@ async function SetMatches() {
 
     const profiles = await SentData.json();
 
-    console.log(profiles)
-    const container = document.getElementById("cards-container");
+    matchesContainer.innerHTML = "";
+    loading.style.display = "none";
+    if (profiles.length === 0) {
+        emptyState.style.display = "block";
+        return;
+    }
 
-    profiles.forEach(user => {
-        // Create main card
+    emptyState.style.display = "none";
+
+    profiles.forEach(match => {
         const card = document.createElement("div");
-        card.className = "profile-card";
+        card.className = "match-card";
 
         card.innerHTML = `
-            <link rel="stylesheet" href="/styleMatches.css">
-        <img src="/${user.ProfilePicture}" alt="/${user.Username}">
-        <div class="user-info">
-            <h3>${user.Username}</h3>
-            <p>${user.Contact_Instructions}</p>
-        </div>
-    `;
+            <img src="${match.ProfilePicture}" alt="${match.Username}">
+            <div class="match-info">
+                <h3>${match.Username}</h3>
+                <p>${match.Contact_Instructions}</p>
+            </div>
+        `;
 
-        // Add card to page
-        container.appendChild(card);
+        matchesContainer.appendChild(card);
     });
 }
 

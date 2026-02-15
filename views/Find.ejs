@@ -8,14 +8,16 @@
 <body>
     <header class="top-bar">
         <h1 class="app-title">Discover</h1>
-        <form style="margin: 0;" action="/Logout" method="post">
-            <button class="save-btn" type="submit">Logout</button>
-        </form>
     </header>
 
     <div class="content">
-        <div class="card-container" id="Holder">
-            <!-- <div class="profile-card">
+        <div class="card-stack">
+            <div id="loadingIndicator" class="loading-overlay">
+                <div class="spinner"></div>
+            </div>
+
+            <div class="card-container" id="Holder">
+                <!-- <div class="profile-card">
 
                 <div class="image-section">
                     <img src="/" id="Img" alt="User photo">
@@ -29,12 +31,13 @@
                     </p>
                 </div>
             </div> -->
-            
-            <div class="card-actions">
-                <button onclick="SetNextUser()" class="btn dislike">✕</button>
-                <button onclick="SetLike(), SetNextUser()" class="btn like">❤</button>
             </div>
 
+        </div>
+
+        <div class="global-actions">
+            <button onclick="SetNextUser()" id="declineBtn" class="action-btn decline">✕</button>
+            <button onclick="SetLike(), SetNextUser()" id="likeBtn" class="action-btn like">❤</button>
         </div>
         <!--
         <div class="card-container">
@@ -55,11 +58,21 @@
             </div>
         </div> -->
     </div>
-
     <nav class="bottom-nav">
-        <a href="/Find" class="nav-item active">🔥</a>
-        <a href="/Matches" class="nav-item">⭐</a>
-        <a href="/" class="nav-item">👤</a>
+        <a href="/Find" class="nav-item active">
+            <span class="nav-icon">🔥</span>
+            <span class="nav-label">Swipe</span>
+        </a>
+
+        <a href="/Matches" class="nav-item">
+            <span class="nav-icon">⭐</span>
+            <span class="nav-label">Matches</span>
+        </a>
+
+        <a href="/" class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Profile</span>
+        </a>
     </nav>
 
 

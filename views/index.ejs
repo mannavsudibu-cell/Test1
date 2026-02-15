@@ -10,32 +10,55 @@
     <header class="top-bar">
         <h1>Edit Profile</h1>
         <form style="margin: 0;" action="/Logout" method="post">
-            <button class="save-btn" type="submit">Logout</button>
+            <button class="logout-btn" type="submit">Logout</button>
         </form>
     </header>
 
     <form class="profile-form" action="/Update" method="post" enctype="multipart/form-data">
-
-        <div class="photo-section">
-            <img src="/<%=User.ProfilePicture %>" class="profile-photo" alt="Profile photo">
-            <p>Upload image</p>
-            <input type="file" name="Image" accept="Image/*">
+        <div class="profile-image-section">
+            <label for="imageUpload" class="image-label">
+                <img id="profilePreview" src="/<%=User.ProfilePicture %>" alt="Profile">
+                <div class="edit-overlay">Edit</div>
+            </label>
+            <input type="file" id="imageUpload" name="Image" accept="image/*" hidden>
         </div>
 
-        <label>
-            Name
+        <script>
+            const imageUpload = document.getElementById("imageUpload");
+            const profilePreview = document.getElementById("profilePreview");
+
+            imageUpload.addEventListener("change", function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        profilePreview.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        </script>
+
+        <!-- <div class="photo-section">
+            <img src="/" class="profile-photo" alt="Profile photo">
+            <p>Upload image</p>
+            <input type="file" name="Image" accept="Image/*">
+        </div> -->
+
+        <div class="form-group">
+            <label>Name</label>
             <input type="text" name="Username" value="<%=User.Username%>" required>
-        </label>
+        </div>
 
-        <label>
-            Description
-            <input type="text" name="Description" value="<%=User.Description%>">
-        </label>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea type="text" name="Description"><%=User.Description%></textarea>
+        </div>
 
-        <label>
-            Contact instructions
+        <div class="form-group">
+            <label>Contact information</label>
             <input type="text" name="Contact" value="<%=User.Contact_Instructions%>">
-        </label>
+        </div>
 
         <label>
             Class
@@ -48,14 +71,25 @@
             </select>
         </label>
 
-        <button type="submit" class="change-photo">Save</button>
+        <button type="submit" class="save-btn">Save</button>
     </form>
 
     <!-- Bottom Navigation -->
     <nav class="bottom-nav">
-        <a href="/Find" class="nav-item">🔥</a>
-        <a href="/Matches" class="nav-item">⭐</a>
-        <a href="/" class="nav-item active">👤</a>
+        <a href="/Find" class="nav-item">
+            <span class="nav-icon">🔥</span>
+            <span class="nav-label">Swipe</span>
+        </a>
+
+        <a href="/Matches" class="nav-item">
+            <span class="nav-icon">⭐</span>
+            <span class="nav-label">Matches</span>
+        </a>
+
+        <a href="/" class="nav-item active">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Profile</span>
+        </a>
     </nav>
 
 

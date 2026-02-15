@@ -7,21 +7,42 @@
 
 <body>
     <header class="top-bar">
-        <h1 class="app-title">Discover</h1>
+        <h1 class="app-title">Matches</h1>
         <form style="margin: 0;" action="/Logout" method="post">
             <button class="save-btn" type="submit">Logout</button>
         </form>
     </header>
+
     <main class="content">
-    <div id="cards-container">
-    </div>
+
+        <div id="loadingIndicator" class="loading-overlay">
+            <div class="spinner"></div>
+        </div>
+
+        <div id="emptyState" style="display: none;" class="empty-state">
+            <div class="empty-icon">💔</div>
+            <h3>Nevienu sakritību vēl</h3>
+            <p>Start swiping, lai atrastu sev jaunus draugus!</p>
+        </div>
+        <div id="matchesContainer" class="matches-container"></div>
     </main>
 
 
     <nav class="bottom-nav">
-        <a href="/Find" class="nav-item active">🔥</a>
-        <a href="/Matches" class="nav-item">⭐</a>
-        <a href="/" class="nav-item">👤</a>
+        <a href="/Find" class="nav-item">
+            <span class="nav-icon">🔥</span>
+            <span class="nav-label">Swipe</span>
+        </a>
+
+        <a href="/Matches" class="nav-item active">
+            <span class="nav-icon">⭐</span>
+            <span class="nav-label">Matches</span>
+        </a>
+
+        <a href="/" class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Profile</span>
+        </a>
     </nav>
 
     <script src="/GetMatches.js" type="text/javascript"></script>
