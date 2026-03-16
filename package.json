@@ -20,7 +20,9 @@
     "express-flash": "^0.0.2",
     "express-session": "^1.19.0",
     "multer": "^2.0.2",
+    "nodemailer": "^8.0.1",
     "pg": "^8.18.0",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.37.7",
+    "uuid": "^13.0.0"
   }
 }
