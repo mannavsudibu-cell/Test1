@@ -6,6 +6,18 @@ var CurrentCard = null
 const Liked = [];
 const Seen = [];
 
+const noMoreBox = document.getElementById("noMoreUsers");
+const cardContainer = document.getElementById("Holder");
+const likeBtn = document.getElementById("likeBtn");
+const declineBtn = document.getElementById("declineBtn");
+const ReportBtn = document.getElementById("ReportBtn");
+
+const Hobbybox = document.getElementById("Hobiji");
+const AmbBox = document.getElementById("Ambitions");
+const MotivBox = document.getElementById("Motivation");
+const SpecialtyBox = document.getElementById("Specialty");
+const DescrBox = document.getElementById("Descr");
+
 async function SetNextUser() {
     if (CurrentCard) {
         CurrentCard.remove();
@@ -34,7 +46,11 @@ async function SetNextUser() {
         ImageSection.className = "image-wrapper";
 
         const NewImage = document.createElement("img");
-        NewImage.src = "/" + Found.ProfilePicture;
+        if (Found.ProfilePicture) {
+            NewImage.src = "/" + Found.ProfilePicture;
+        } else {
+            NewImage.src = "/Default.png";
+        }
         NewImage.alt = "User photo"
 
         ImageSection.appendChild(NewImage)
@@ -43,18 +59,24 @@ async function SetNextUser() {
         InfoSection.className = "info-section";
 
         const Name = document.createElement("h2");
-        Name.innerHTML = Found.Username;
+        Name.innerHTML = Found.Username + " - " + Found.Class + " Klase"
         InfoSection.appendChild(Name);
 
-        const Klase = document.createElement("p");
-        Klase.className = "location";
-        Klase.innerHTML = Found.Class
-        InfoSection.appendChild(Klase);
+        //const Klase = document.createElement("p");
+        //Klase.className = "location";
+        //Klase.innerHTML = Found.Class
+        //InfoSection.appendChild(Klase);
 
         const Description = document.createElement("p");
         Description.className = "user-bio";
         Description.innerHTML = Found.Description;
         InfoSection.appendChild(Description);
+
+        const MoreInfo = document.createElement("button");
+        MoreInfo.className = "Extra-Info";
+        MoreInfo.innerHTML = "More info"
+        MoreInfo.addEventListener("click", openMore);
+        InfoSection.appendChild(MoreInfo);
 
         Id = Found.id
 
@@ -64,32 +86,45 @@ async function SetNextUser() {
         CardContainer.insertBefore(card, CardContainer.firstChild)
         enableSwipe(card);
         CurrentCard = card;
+
+        Hobbybox.innerHTML = "Hobiji: " + Found.Hobbies
+        SpecialtyBox.innerHTML = "Novirziens: " + Found.Specialty
+        AmbBox.innerHTML = "Ambīcijas: " + Found.Ambitions
+        MotivBox.innerHTML = "četrrindis potenciālajam vēstuļu draugam: " + Found.Motivation
+        DescrBox.innerHTML = "Apraksts: " + Found.Description
     } catch (Err) {
+        noMoreBox.style.display = "block";
+        CardContainer.style.display = "None";
+        likeBtn.disabled = true;
+        declineBtn.disabled = true;
+        ReportBtn.disabled = true;
         console.log("Ran out")
     }
 
 }
 
-function SaveLikes() {
-    const Like = fetch("/add-Like", {
+async function SetLike() {
+    const Like = await fetch("/add-Like", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ Value: Liked }),
+        body: JSON.stringify({ Value: id }),
     })
-}
 
-function SetLike() {
+    console.log(Like);
+    try {
+        const LikeData = await Like.json();
+        showMatch(LikeData.Username);
+    } catch (Err) {
+
+    }
+
     Liked.push(Id)
 }
 
 window.onload = function () {
     SetNextUser()
-}
-
-window.onbeforeunload = function () {
-    SaveLikes()
 }
 
 function enableSwipe(card) {
@@ -154,4 +189,47 @@ function enableSwipe(card) {
     card.addEventListener("mousedown", e => start(e.clientX));
     window.addEventListener("mousemove", e => move(e.clientX));
     window.addEventListener("mouseup", end);
+}
+
+async function SubmitReport() {
+    const Like = await fetch("/Report", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ Value: id }),
+    })
+
+    console.log(Like);
+
+    Liked.push(Id)
+
+    SetNextUser();
+}
+
+const matchPopup = document.getElementById("matchPopup");
+const matchedName = document.getElementById("matchedName");
+
+function showMatch(userName) {
+    matchedName.textContent = userName;
+    matchPopup.style.display = "flex";
+}
+
+function closeMatch() {
+    matchPopup.style.display = "none";
+}
+
+document.getElementById("keepSwiping").addEventListener("click", closeMatch);
+document.getElementById("goToChat").addEventListener("click", function () {
+    window.location.href = "/Matches"; // adjust if needed
+});
+
+const morePanel = document.getElementById("more-panel");
+
+function openMore() {
+    morePanel.classList.add("active");
+}
+
+function closeMore() {
+    morePanel.classList.remove("active");
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=1.0">
+    <title>Authorize</title>
+    <link rel="stylesheet" href="/style.css" type="text/css">
+</head>
+
+<body class="UserJoining">
+    <div class="Container">
+        <div class="Form-Box" id="login-form">
+            <form action="/Authorize" method="post">
+                <h2>Authorize</h2>
+                <% if(Error) { %>
+                    <%= Error %>
+                <% } %>
+                <input type="email" name="Email" placeholder="Email" value="<%=AutoFill%>" required>
+                <input type="text" name="OTP" placeholder="Autorization Code" required>
+                <button type="submit" name="login">Authorize</button>
+            </form>
+        </div>
+    </div>
+</body>

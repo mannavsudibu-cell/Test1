@@ -13,6 +13,25 @@ body {
     background: linear-gradient(135deg, #ff758c, #ff7eb3);
     padding-top: calc(60px + env(safe-area-inset-top));
     padding-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+    background: #ff7eb3;
+    background-image: repeating-linear-gradient(45deg,
+            rgba(255, 255, 255, 0.08) 0px,
+            rgba(255, 255, 255, 0.08) 10px,
+            transparent 10px,
+            transparent 20px);
+
+    background-size: 200% 200%;
+
+    animation: moveBackground 250s linear infinite;
+}
+
+@keyframes moveBackground {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
 }
 
 /* Top bar */
@@ -244,4 +263,29 @@ textarea {
     cursor: pointer;
 }
 
+.icon-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -16px;
+
+    width: 18px;
+    height: 18px;
+
+    background: red;
+    color: white;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+}
 

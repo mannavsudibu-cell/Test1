@@ -21,9 +21,14 @@ async function SetMatches() {
     profiles.forEach(match => {
         const card = document.createElement("div");
         card.className = "match-card";
-
+        var LinkToPicture
+        if(match.ProfilePicture){
+            LinkToPicture = match.ProfilePicture
+        }else{
+            LinkToPicture = "/Default.png"
+        }
         card.innerHTML = `
-            <img src="${match.ProfilePicture}" alt="${match.Username}">
+            <img src="${LinkToPicture}" alt="${match.Username}">
             <div class="match-info">
                 <h3>${match.Username}</h3>
                 <p>${match.Contact_Instructions}</p>

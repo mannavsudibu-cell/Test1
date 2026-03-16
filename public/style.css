@@ -15,10 +15,31 @@ body {
     align-items: center;
     justify-content: center;
     background: var(--Color3);
+
+    background-image: repeating-linear-gradient(45deg,
+            rgba(255, 255, 255, 0.08) 0px,
+            rgba(255, 255, 255, 0.08) 10px,
+            transparent 10px,
+            transparent 20px);
+
+    background-size: 200% 200%;
+
+    animation: moveBackground 250s linear infinite;
+
+
     color: var(--Color2);
     min-height: 100%;
 
     font-family: sans-serif;
+}
+
+@keyframes moveBackground {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 100% 0;
+    }
 }
 
 .UserJoining {
@@ -32,6 +53,10 @@ body {
 
 .Container {
     margin: 0 15px;
+    size: auto;
+    align-items: center;
+    justify-items: center;
+    display: flex;
 }
 
 .Form-Box {
@@ -41,6 +66,9 @@ body {
     background: white;
     border-radius: 10px;
     box-shadow: 0 0 10px black;
+    display: flex;
+    align-items: center;
+    justify-items: center;
 }
 
 h2 {
@@ -52,7 +80,8 @@ h2 {
 input,
 select {
     width: 100%;
-    padding: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
     background: lightgray;
     border-radius: 6px;
     border: none;

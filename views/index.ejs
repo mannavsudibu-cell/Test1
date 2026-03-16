@@ -14,121 +14,140 @@
         </form>
     </header>
 
-    <form class="profile-form" action="/Update" method="post" enctype="multipart/form-data">
-        <div class="profile-image-section">
-            <label for="imageUpload" class="image-label">
-                <img id="profilePreview" src="/<%=User.ProfilePicture %>" alt="Profile">
-                <div class="edit-overlay">Edit</div>
-            </label>
-            <input type="file" id="imageUpload" name="Image" accept="image/*" hidden>
-        </div>
+    <% if (!User.Verified) { %>
+        <form class="profile-form" action="/Authorize" method="post">
+            <h2>Authorizē savu Ēpastu</h2>
+            <input type="text" name="OTP" placeholder="Autorizācijas kods" required>
+            <button type="submit" class="save-btn" name="login">Autorizēt</button>
+        </form>
+        <% } %>
 
-        <script>
-            const imageUpload = document.getElementById("imageUpload");
-            const profilePreview = document.getElementById("profilePreview");
+            <form class="profile-form" action="/Update" method="post" enctype="multipart/form-data">
+                <div class="profile-image-section">
+                    <label for="imageUpload" class="image-label">
+                        <% if (User.ProfilePicture) { %>
+                            <img id="profilePreview" src="/<%=User.ProfilePicture %>">
+                            <% }else{ %>
+                                <img id="profilePreview" src="/Default.png">
+                                <% } %>
+                                    <div class=" edit-overlay">Edit
+                                    </div>
+                    </label>
+                    <input type="file" id="imageUpload" name="Image" accept="image/*" hidden>
+                </div>
 
-            imageUpload.addEventListener("change", function () {
-                const file = this.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        profilePreview.src = e.target.result;
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        </script>
+                <script>
+                    const imageUpload = document.getElementById("imageUpload");
+                    const profilePreview = document.getElementById("profilePreview");
 
-        <!-- <div class="photo-section">
-            <img src="/" class="profile-photo" alt="Profile photo">
-            <p>Upload image</p>
-            <input type="file" name="Image" accept="Image/*">
-        </div> -->
+                    imageUpload.addEventListener("change", function () {
+                        const file = this.files[0];
+                        if (file) {
+                            if (file.size > 2097152) {
+                                alert("File is too big!");
+                                this.value = "";
+                                return
+                            }
+                            const reader = new FileReader();
+                            reader.onload = function (e) {
+                                profilePreview.src = e.target.result;
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                </script>
 
-        <div class="form-group">
-            <label>Name</label>
-            <input type="text" name="Username" value="<%=User.Username%>" required>
-        </div>
+                <div class="form-group">
+                    <label>Vārds, uzvārds</label>
+                    <input type="text" name="Username" value="<%=User.Username%>" required>
+                </div>
+                <div class="form-group">
+                    <label>Minī apraksts par sevi</label>
+                    <input type="text" name="Bio" value="<%=User.Bio%>" required>
+                </div>
 
-        <div class="form-group">
-            <label>Description</label>
-            <textarea type="text" name="Description"><%=User.Description%></textarea>
-        </div>
+                <label>
+                    Klase
+                    <select name="Class" required>
+                        <option value=<%=User.Class%>><%=User.Class%>
+                        </option>
+                        <% if (User.Class !=10) { %>
+                            <option value="10">10</option>
+                            <% }%>
+                                <% if (User.Class !=11) { %>
+                                    <option value="11">11</option>
+                                    <% }%>
+                                        <% if (User.Class !=12) { %>
+                                            <option value="12">12</option>
+                                            <% }%>
+                    </select>
+                </label>
 
-        <div class="form-group">
-            <label>Contact information</label>
-            <input type="text" name="Contact" value="<%=User.Contact_Instructions%>">
-        </div>
+                <div class="form-group">
+                    <label>Kontakta informācija, tiek dalīts abpusēju piekrišanu gadijumā</label>
+                    <input type="text" name="Contact" value="<%=User.Contact_Instructions%>">
+                </div>
 
-        <label>
-            Class
-            <select name="Class" required>
-                <option value=<%=User.Class%>><%=User.Class%>
-                </option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-            </select>
-        </label>
+                <div class="form-group">
+                    <label>Hobiji</label>
+                    <input type="text" name="Hobbies" value="<%=User.Hobbies%>"></input>
+                </div>
 
-        <button type="submit" class="save-btn">Save</button>
-    </form>
+                <div class="form-group">
+                    <label>Ambīcijas</label>
+                    <input type="text" name="Ambitions" value="<%=User.Ambitions%>">
+                </div>
 
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-        <a href="/Find" class="nav-item">
-            <span class="nav-icon">🔥</span>
-            <span class="nav-label">Swipe</span>
-        </a>
+                <div class="form-group">
+                    <label>uzraksti četrrindi savām potenciālajam vēstuļu draugam</label>
+                    <textarea type="text" name="Motivation"><%=User.Motivation%></textarea>
+                </div>
 
-        <a href="/Matches" class="nav-item">
-            <span class="nav-icon">⭐</span>
-            <span class="nav-label">Matches</span>
-        </a>
+                <div class="form-group">
+                    <label>Novirziens</label>
+                    <input type="text" name="Specialty" value="<%=User.Specialty%>">
+                </div>
 
-        <a href="/" class="nav-item active">
-            <span class="nav-icon">👤</span>
-            <span class="nav-label">Profile</span>
-        </a>
-    </nav>
+                <div class="form-group">
+                    <label>Pilns apraksts par sevi, raksti visu</label>
+                    <textarea type="text" name="Description"><%=User.Description%></textarea>
+                </div>
 
 
-    <!-- <h1>Edit Profile</h1>
-    <form action="/Update" method="post" enctype="multipart/form-data" class="UpdateProfileOptions">
-        <div class="Changeable">
-            <p2>Name</p2>
-            <input type="text" name="Username" value="<%=User.Username%>" required>
-        </div>
-        <div class="Changeable">
-            <p2>Profile Image</p2>
-            <input type="file" name="Image" accept="Image/*">
-            <div class="UploadedImageContiner">
-                <p3 class="Grow">Uploaded picture will be displayed after saving</p3>
-                <img class="Grow UploadedImage" src="/<%=User.ProfilePicture %>"></img>
-            </div>
-        </div>
-        <div class="Changeable">
-            <p2>Class</p2>
-            <select name="Class" required>
-                <option value=<%=User.Class%>><%=User.Class%>
-                </option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-            </select>
-        </div>
+                <% if (User.Verified) { %>
+                    <label style="text-align: center;">Verified ✅</label>
+                    <% }else{ %>
+                        <label style="text-align: center;">Verified ❌</label>
+                        <label style="text-align: center;">Citi tevi nespēs redzēt līdz tu neievadi 4 ciparu atsūtīto
+                            kodu uz izvēlēto ēpastu.</label>
+                        <% }%>
 
-        <button type="submit" name="Register">Save</button>
-    </form>
-    <form action="/Logout" method="post">
-        <button type="submit">Logout</button>
-    </form>
+                            <button type="submit" class="save-btn">Save</button>
 
-    <div class="Nav_Footer_Container">
-        <div class="ChangeSite">
-            <a href="/Find" class="NavText">Find</a>
-            <a class="NavText">Matches</a>
-            <a href="/" class="NavText">User</a>
-        </div>
-    </div> -->
+                            <label style="padding-top: 12px; margin-bottom: 0px; display: flex; text-align: center; align-items: center; justify-content: center;"><a href="/Policy">Privacy Policy</a></label>
+            </form>
+
+            <!-- Bottom Navigation -->
+            <nav class="bottom-nav">
+                <a href="/Find" class="nav-item">
+                    <span class="nav-icon">🔥</span>
+                    <span class="nav-label">Swipe</span>
+                </a>
+
+                <a href="/Matches" class="nav-item">
+                    <% if (User.NewOne) { %>
+                        <div class="icon-wrapper">
+                            <span class="notification-badge">!</span>
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+                        <% } %>
+                            <span class="nav-icon">⭐</span>
+                            <span class="nav-label">Matches</span>
+                </a>
+
+                <a href="/" class="nav-item active">
+                    <span class="nav-icon">👤</span>
+                    <span class="nav-label">Profile</span>
+                </a>
+            </nav>
 </body>

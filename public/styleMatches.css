@@ -133,6 +133,25 @@ body {
     background: linear-gradient(135deg, #ff758c, #ff7eb3);
     padding-top: calc(60px + env(safe-area-inset-top));
     padding-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+    background: #ff7eb3;
+    background-image: repeating-linear-gradient(45deg,
+            rgba(255, 255, 255, 0.08) 0px,
+            rgba(255, 255, 255, 0.08) 10px,
+            transparent 10px,
+            transparent 20px);
+
+    background-size: 200% 200%;
+
+    animation: moveBackground 250s linear infinite;
+}
+
+@keyframes moveBackground {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
 }
 
 .top-bar {
@@ -197,6 +216,9 @@ img {
 
 /* Empty State */
 .empty-state {
+    padding: 16px;
+    background-color: white;
+    border-radius: 8px;
     text-align: center;
     margin-top: 60px;
     color: #777;

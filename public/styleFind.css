@@ -163,6 +163,31 @@ body {
     padding-top: calc(var(--top-bar-height) + env(safe-area-inset-top));
     padding-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
     overflow: hidden;
+    margin: 0;
+    min-height: 100vh;
+
+    /* base pink color */
+    background: #ff7eb3;
+
+    /* diagonal lines */
+    background-image: repeating-linear-gradient(45deg,
+            rgba(255, 255, 255, 0.08) 0px,
+            rgba(255, 255, 255, 0.08) 10px,
+            transparent 10px,
+            transparent 20px);
+
+    background-size: 200% 200%;
+    animation: moveBackground 250s linear infinite;
+}
+
+@keyframes moveBackground {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
 }
 
 .top-bar {
@@ -317,14 +342,16 @@ body {
 
 .image-wrapper {
     width: 100%;
-    height: 65%; /* Image takes 65% of card */
+    height: 65%;
+    /* Image takes 65% of card */
     overflow: hidden;
 }
 
 .image-wrapper img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* This prevents resizing issues */
+    object-fit: cover;
+    /* This prevents resizing issues */
     display: block;
 }
 
@@ -333,8 +360,16 @@ body {
     color: #555;
 
     display: -webkit-box;
-    -webkit-line-clamp: 3;      /* number of visible lines */
+    -webkit-line-clamp: 3;
+    /* number of visible lines */
     -webkit-box-orient: vertical;
+
+    white-space: pre-line;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+
+    max-width: 250px;
+    width: 100%;
 
     overflow: hidden;
 }
@@ -360,7 +395,8 @@ body {
     background: rgba(255, 255, 255, 0.9);
     z-index: 50;
 
-    border-radius: 20px; /* matches card stack */
+    border-radius: 20px;
+    /* matches card stack */
 }
 
 /* Spinner */
@@ -382,4 +418,199 @@ body {
 .card-stack {
     position: relative;
     height: 420px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Dark background overlay */
+.match-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: none;
+    /* hidden by default */
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2000;
+}
+
+/* Match box */
+.match-box {
+    background: white;
+    padding: 30px 25px;
+    border-radius: 24px;
+    text-align: center;
+    width: 85%;
+    max-width: 350px;
+
+    animation: popIn 0.3s ease;
+}
+
+/* Buttons */
+.match-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.match-buttons button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 14px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#keepSwiping {
+    background: #eee;
+}
+
+#goToChat {
+    background: hotpink;
+    color: white;
+}
+
+/* Animation */
+@keyframes popIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.no-more {
+    display: none;
+    /* hidden by default */
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.no-more-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.no-more h3 {
+    margin-bottom: 8px;
+}
+
+.no-more button {
+    margin-top: 15px;
+    padding: 12px 20px;
+    border-radius: 20px;
+    border: none;
+    background: hotpink;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.icon-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -16px;
+
+    width: 18px;
+    height: 18px;
+
+    background: red;
+    color: white;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+}
+
+.Extra-Info {
+    width: 30%;
+    align-self: flex-end;
+    border-width: 0px;
+    background-color: transparent;
+    color: rgba(104, 104, 104, 0.718)
+}
+
+.Extra-Info:hover {
+    cursor: pointer;
+    color: rgba(104, 104, 104, 0.91)
+}
+
+.more-panel {
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    right: 0;
+
+    height: 60%;
+    background: white;
+    border-radius: 25px 25px 0 0;
+
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.25);
+
+    transition: bottom 0.35s ease;
+    z-index: 2000;
+
+    padding: 20px;
+}
+
+.more-panel.active {
+    bottom: 0;
+}
+
+.more-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.more-header button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.more-content {
+    overflow-y: auto;
+    height: calc(100% - 40px);
+}
+
+.more-content p {
+    margin-bottom: 10px;
+}
+
+.report-btn {
+    width: 100%;
+    border: none;
+    background: #ff4d4d;
+    color: white;
+    border-radius: 12px;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
 }

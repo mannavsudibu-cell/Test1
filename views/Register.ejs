@@ -12,9 +12,12 @@
         <div class="Form-Box" id="register-form">
             <form action="/Register" method="post">
                 <h2>Register</h2>
+                <% if (Error) { %>
+                    <%= Error %>
+                <% } %>
                 <input type="text" name="Username" placeholder="Username" required>
                 <input type="email" name="Email" placeholder="Email" required>
-                <input type="password" name="Password" placeholder="Password" required>
+                <input type="password" name="Password" placeholder="At least 8 characters" required>
                 <select name="Class" required>
                     <option value="">--Select Class--</option>
                     <option value="10">10</option>
@@ -23,6 +26,7 @@
                 </select>
                 <button type="submit" name="Register">Register</button>
                 <p>Have an account? <a href="/Login">Login</a></p>
+                <p>By registering you agree to our <a href="/Policy">Privacy Policy</a></p>
             </form>
         </div>
     </div>
