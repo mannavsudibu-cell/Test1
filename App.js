@@ -445,6 +445,7 @@ app.get("/Find", CheckAuthenticated, async (req, res) => {
 })
 
 app.get("/", CheckAuthenticated, (req, res) => {
+    console.log("Baija")
     res.render("index.ejs");
 })
 
@@ -498,6 +499,7 @@ app.get("/Register", CheckNotAuthenticated, (req, res) => {
 })
 
 function CheckAuthenticated(req, res, next) {
+        console.log("Baija1")
     if (!req.session.User) {
         return res.redirect('/Login')
     }
