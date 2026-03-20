@@ -83,7 +83,7 @@ const post = sequelize.define("TestDatabase00", {
     },
     Likes: {
         type: DataTypes.ARRAY(DataTypes.INTEGER),
-        allowNull: true,
+        allowNull: false,
     },
     Bio: {
         type: DataTypes.STRING,
@@ -131,7 +131,7 @@ const post = sequelize.define("TestDatabase00", {
     },
     Blocked: {
         type: DataTypes.ARRAY(DataTypes.INTEGER),
-        allowNull: true,
+        allowNull: false,
     },
 })
 
@@ -516,6 +516,6 @@ app.use((req, res) => {
     res.send(`<h1>Error 404<h1>`)
 })
 
-app.listen(Port, () => {
-    console.log(`Example app listening at http://localhost:${Port}`);
+app.listen(Port, function() {
+    console.log(`Listening ${Port}`);
 });
