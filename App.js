@@ -487,6 +487,7 @@ app.post("/Matches", async (req, res) => {
 })
 
 app.get("/Login", CheckNotAuthenticated, (req, res) => {
+    console.log("Baija2")
     res.render("Login.ejs", { Error: null });
 })
 
@@ -507,6 +508,7 @@ function CheckAuthenticated(req, res, next) {
 }
 
 function CheckNotAuthenticated(req, res, next) {
+    console.log("Baija3")
     if (req.session.User) {
         return res.redirect('/')
     }
