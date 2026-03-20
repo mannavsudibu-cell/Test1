@@ -29,7 +29,8 @@ let transporter = nodemailer.createTransport({
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ limit: '500mb', extended: true, parameterLimit: 10000000000 }));
-app.set("view-engine", "ejs");
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, "public")))
 app.use(express.static(path.join(__dirname, "Uploads")))
 
@@ -446,7 +447,7 @@ app.get("/Find", CheckAuthenticated, async (req, res) => {
 
 app.get("/", CheckAuthenticated, (req, res) => {
     console.log("Baija")
-    res.render("index.ejs");
+    res.render("index.ejs", {layout:false});
 })
 
 app.get("/Matches", CheckAuthenticated, (req, res) => {
